@@ -18,10 +18,7 @@ export const axiosBaseQuery =
     BaseQueryApi,
     unknown
   > =>
-  async (
-    { url, method, body, params, headers },
-    { getState, signal, dispatch }
-  ) => {
+  async ({ url, method, body, params, headers }, { signal }) => {
     try {
       const token = localStorage.getItem("access-token");
       const getAuthHeader = () => ({

@@ -15,9 +15,21 @@ export const authOptions: NextAuthOptions = {
       },
       authorize: async (credentials, _req) => {
         try {
-          const user: User = { id: "1" };
-          if (user) {
-            return user;
+          console.log(credentials);
+          const res: any = await fetch(`http://localhost:1211/user/login`, {
+            method: "POST",
+            body: JSON.stringify({
+              username: credentials?.username,
+              password: credentials?.password,
+            }),
+            headers: { "Content-Type": "application/json" },
+          });
+          const data = await res.json();
+
+          //const user: User = { id: "1" };
+          if (data) {
+            console.log(31, data);
+            return data;
           }
           return null; // Add this line to satisfy the `authorize` typings
         } catch (e: any) {
@@ -30,6 +42,16 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/login",
+  },
+  callbacks: {
+    async jwt(a) {
+      const { token, user } = a;
+      return { ...token, ...user };
+    },
+    async session({ session, token }) {
+      session.user = token as any;
+      return session;
+    },
   },
 };
 

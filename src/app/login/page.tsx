@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Login } from "@/modules/users/login/components/login";
+import { Login } from "@/modules/users/components/login";
 import { Header } from "@/shared/components/layouts/Header";
 
 const LoginPage: React.FC = () => (

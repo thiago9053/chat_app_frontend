@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC } from "react";
 import {
   FacebookIcon,
   GoogleIcon,
@@ -35,7 +35,7 @@ export const Login: FC = () => {
             }
             name="username"
           >
-            <Input className="text-[13px] border border-[#e6ebf5] rounded text-lg outline-0 px-3 py-1 focus:outline-0 focus:ring-0 focus:border-[#e6ebf5]" />
+            <Input className="text-[13px] border border-[#e6ebf5] rounded outline-0 px-3 py-1 focus:outline-0 focus:ring-0 focus:border-[#e6ebf5]" />
           </Form.Item>
           <Form.Item
             className="!mb-2"
@@ -66,7 +66,7 @@ export const Login: FC = () => {
                   </span>
                 );
               }}
-              className="text-[13px] border border-[#e6ebf5] rounded text-lg outline-0 px-3 py-1 focus:outline-0 focus:ring-0 focus:border-[#e6ebf5]"
+              className="text-[13px] border border-[#e6ebf5] rounded outline-0 px-3 py-1 focus:outline-0 focus:ring-0 focus:border-[#e6ebf5]"
             />
           </Form.Item>
           <p className="text-[#797c8c] text-[15px] mt-1 mb-2">
