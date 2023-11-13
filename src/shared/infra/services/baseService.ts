@@ -37,7 +37,7 @@ export abstract class BaseService {
       method: "POST",
       url: `${this.baseUrl}/users/token/refresh`,
       data: {
-        refreshToken: this.authService.getToken("refresh-token"),
+        refreshToken: this.authService.getToken("refresh-token").token,
       },
     });
     return response.data.accessToken;
@@ -46,7 +46,7 @@ export abstract class BaseService {
   private getErrorResponseHandler() {
     return async (error: any) => {
       if (this.didAccessTokenExpire(error.response)) {
-        const refreshToken = this.authService.getToken("refresh-token");
+        const refreshToken = this.authService.getToken("refresh-token").token;
         const hasRefreshToken = !!refreshToken;
 
         if (hasRefreshToken) {

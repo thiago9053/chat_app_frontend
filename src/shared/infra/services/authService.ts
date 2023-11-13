@@ -1,9 +1,15 @@
+import moment from "moment";
+
 type TokenType = "access-token" | "refresh-token";
 
+export type TokenPattern = {
+  token: string;
+  expires: Date;
+};
 export interface IAuthService {
   isAuthenticated(): boolean;
-  getToken(tokenType: TokenType): string;
-  setToken(tokenType: TokenType, token: string): void;
+  getToken(tokenType: TokenType): TokenPattern;
+  setToken(tokenType: TokenType, token: string, time?: number): void;
   removeToken(tokenType: TokenType): void;
 }
 
@@ -15,8 +21,8 @@ export class AuthService {
   public refreshToken: string;
 
   constructor() {
-    this.accessToken = this.getToken("access-token");
-    this.refreshToken = this.getToken("refresh-token");
+    this.accessToken = this.getToken("access-token").token;
+    this.refreshToken = this.getToken("refresh-token").token;
   }
 
   private getTokenName(tokenType: TokenType): string {
@@ -25,29 +31,29 @@ export class AuthService {
       : AuthService.refreshTokenName;
   }
 
-  public getToken(tokenType: TokenType): string {
+  public getToken(tokenType: TokenType): TokenPattern {
     const tokenName: string = this.getTokenName(tokenType);
 
-    const token =
+    const tokenPattern =
       typeof window !== "undefined" && window.localStorage
         ? localStorage.getItem(tokenName)
         : "";
-    return token ? JSON.parse(token).token : null;
+    return {
+      token: tokenPattern ? JSON.parse(tokenPattern).token : null,
+      expires: tokenPattern ? JSON.parse(tokenPattern).expires : null,
+    };
   }
 
-  public setToken(tokenType: TokenType, token: string): void {
+  public setToken(tokenType: TokenType, token: string, time?: number): void {
     var d = new Date();
-    d.setTime(d.getTime() + 30 * 60 * 1000); // set cookie to last 30 mins
+    d.setTime(d.getTime() + (time ?? 60) * 60 * 1000);
 
     const tokenName: string = this.getTokenName(tokenType);
-
-    localStorage.setItem(
-      tokenName,
-      JSON.stringify({
-        token: token,
-        expires: d,
-      })
-    );
+    const tokenPattern: TokenPattern = {
+      token: token,
+      expires: d,
+    };
+    localStorage.setItem(tokenName, JSON.stringify(tokenPattern));
   }
 
   public removeToken(tokenType: TokenType): void {
@@ -56,6 +62,9 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return this.getToken("access-token") !== null;
+    const tokenPattern = this.getToken("access-token");
+    const { token, expires } = tokenPattern;
+    console.log(token, expires);
+    return token !== null && moment(expires) > moment();
   }
 }

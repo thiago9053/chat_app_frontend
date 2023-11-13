@@ -24,7 +24,11 @@ export class UserService extends BaseService {
       const response = await this.post("/user/login", args);
       const data: loginResponse = response.data as loginResponse;
       this.authService.setToken("access-token", data.accessToken);
-      this.authService.setToken("refresh-token", data.refreshToken);
+      this.authService.setToken(
+        "refresh-token",
+        data.refreshToken,
+        7 * 24 * 60
+      );
       return right(Result.ok<loginResponse>(data));
     } catch (err: any) {
       return left(
@@ -36,7 +40,7 @@ export class UserService extends BaseService {
   public async logout(): Promise<APIResponse<void>> {
     try {
       await this.post("/user/logout", null, null, {
-        authorization: this.authService.getToken("access-token"),
+        authorization: this.authService.getToken("access-token").token,
       });
       this.authService.removeToken("access-token");
       this.authService.removeToken("refresh-token");
