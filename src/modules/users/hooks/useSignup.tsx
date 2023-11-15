@@ -2,21 +2,18 @@ import { userService } from "../services";
 import { loadingState } from "@/shared/constants/loadingState";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
-type useLoginResponse = {
+type useSignupResponse = {
   loading: loadingState;
-  handleLogin: (formValue?: any) => Promise<void>;
+  handleSignup: (formValue?: any) => Promise<void>;
 };
 
-export const useLogin = (): useLoginResponse => {
+export const useSignup = (): useSignupResponse => {
   const [loadingStatus, setLoadingStatus] = useState<loadingState>("IDLE");
-  const router = useRouter();
-
-  const handleLogin = async (formValue: any) => {
+  const handleSignup = async (formValue: any) => {
     setLoadingStatus("LOADING");
-    const { username, password } = formValue;
-    const response = await userService.login({ username, password });
+    const { username, password, email } = formValue;
+    const response = await userService.signup({ username, password, email });
     if (response.isLeft()) {
       setLoadingStatus("ERROR");
       const error = response.value;
@@ -25,14 +22,13 @@ export const useLogin = (): useLoginResponse => {
       });
     } else {
       setLoadingStatus("COMPLETE");
-      toast.success("Login successfully", {
+      toast.success("Sign up new account successfully", {
         position: toast.POSITION.TOP_LEFT,
       });
-      router.push("/");
     }
   };
   return {
     loading: loadingStatus,
-    handleLogin,
+    handleSignup,
   };
 };

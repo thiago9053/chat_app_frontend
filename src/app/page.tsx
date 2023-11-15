@@ -1,12 +1,11 @@
 "use client";
-import { useLogout } from "@/modules/users/hooks/useLogout";
+import { Menu } from "@/modules/sidebar/components/menu";
 import { authService } from "@/shared/infra/services";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const { handleLogout } = useLogout();
 
   useEffect(() => {
     const isAuthenticated = authService.isAuthenticated();
@@ -16,12 +15,10 @@ export default function Home() {
   }, []);
 
   return (
-    <button
-      onClick={() => {
-        handleLogout();
-      }}
-    >
-      Logout
-    </button>
+    <div className="w-full h-screen flex items-center justify-between">
+      <div className="h-full flex item-centers">
+        <Menu />
+      </div>
+    </div>
   );
 }

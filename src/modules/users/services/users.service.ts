@@ -4,7 +4,7 @@ import { Result } from "@/shared/core/Result";
 import { right, left } from "@/shared/core/Either";
 import { APIResponse } from "@/shared/infra/services/APIResponse";
 
-export type LoginArgs = {
+export type loginArgs = {
   username: string;
   password: string;
 };
@@ -14,12 +14,18 @@ export type loginResponse = {
   accessToken: string;
 };
 
+export type signupArgs = {
+  username: string;
+  password: string;
+  email: string;
+};
+
 export class UserService extends BaseService {
   constructor(authService: IAuthService) {
     super(authService);
   }
 
-  public async login(args: LoginArgs): Promise<APIResponse<loginResponse>> {
+  public async login(args: loginArgs): Promise<APIResponse<loginResponse>> {
     try {
       const response = await this.post("/user/login", args);
       const data: loginResponse = response.data as loginResponse;
@@ -44,6 +50,18 @@ export class UserService extends BaseService {
       });
       this.authService.removeToken("access-token");
       this.authService.removeToken("refresh-token");
+      return right(Result.ok<void>());
+    } catch (err: any) {
+      return left(
+        err.response ? err.response.data.message : "Connection failed"
+      );
+    }
+  }
+
+  public async signup(args: signupArgs): Promise<APIResponse<void>> {
+    try {
+      const response = await this.post("/user/create", args);
+      console.log(63, response);
       return right(Result.ok<void>());
     } catch (err: any) {
       return left(
