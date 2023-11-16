@@ -13,7 +13,7 @@ export interface IAuthService {
   removeToken(tokenType: TokenType): void;
 }
 
-export class AuthService {
+export class AuthService implements IAuthService {
   public static accessTokenName: string = "access-token";
   public static refreshTokenName: string = "refresh-token";
 
@@ -57,6 +57,7 @@ export class AuthService {
   }
 
   public removeToken(tokenType: TokenType): void {
+    console.log("remove token");
     const tokenName: string = this.getTokenName(tokenType);
     localStorage.removeItem(tokenName);
   }

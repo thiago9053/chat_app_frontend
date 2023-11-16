@@ -2,11 +2,16 @@
 import { Providers } from "@/shared/infra/redux/providers";
 import "./globals.css";
 // import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import { AntdStyledComponentsRegistry } from "@/shared/infra/antd/AntdStyledComponentsRegistry";
 import ToastProvider from "@/shared/infra/toastify/ToastProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",

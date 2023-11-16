@@ -14,3 +14,8 @@ export * from "./settingIcon";
 export * from "./lightModeIcon";
 export * from "./darkModeIcon";
 export * from "./actionIcon";
+export * from "./actionHorizontalIcon";
+export * from "./downloadIcon";
+export * from "./fileIcon";
+export * from "./filesIcon";
+export * from "./userIcon";
