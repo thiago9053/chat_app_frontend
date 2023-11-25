@@ -65,7 +65,6 @@ export class AuthService implements IAuthService {
   isAuthenticated(): boolean {
     const tokenPattern = this.getToken("access-token");
     const { token, expires } = tokenPattern;
-    console.log(token, expires);
     return token !== null && moment(expires) > moment();
   }
 }

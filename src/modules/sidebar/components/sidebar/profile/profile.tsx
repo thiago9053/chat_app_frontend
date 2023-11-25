@@ -1,3 +1,4 @@
+import { useProfile } from "@/modules/sidebar/hooks/useProfile";
 import {
   ActionIcon,
   ActionHorizontalIcon,
@@ -11,6 +12,9 @@ import {
 } from "@/shared/constants/placeholderImages";
 
 export const Profile = () => {
+  const { profile, loadingState } = useProfile();
+  const username = profile?.user?.username;
+  console.log(profile, loadingState);
   return (
     <div className="w-full h-full relative shadow-[10px_0px_60px_-15px_rgba(0,0,0,0.3)]">
       <div
@@ -31,7 +35,9 @@ export const Profile = () => {
             backgroundImage: `url(${avatarPlaceholder})`,
           }}
         ></div>
-        <h1 className="font-bold text-gray-700 text-[17px]">{"((Unamed))"}</h1>
+        <h1 className="font-bold text-gray-700 text-[17px]">
+          {username || "((Unamed))"}
+        </h1>
         <p className="text-slate-500 text-[15px]">
           {"((Dont have signature))"}
         </p>
@@ -51,12 +57,12 @@ export const Profile = () => {
             Le)
           </div>
           <div className="flex justify-start items-center">
-            <UserIcon className="h-3 pr-4" fill="#797c8c" />{" "}
-            levanthi.tl9@gmail.com Le)
+            <UserIcon className="h-3 pr-4" fill="#797c8c" />
+            levanthi.tl9@gmail.com
           </div>
           <div className="flex justify-start items-center">
-            <UserIcon className="h-3 pr-4" fill="#797c8c" /> Le Van Thi (Alex
-            Le)
+            <UserIcon className="h-3 pr-4" fill="#797c8c" />
+            Ho Chi Minh city, Vietnam
           </div>
         </div>
         <div className="py-5 border-b border-gray-200">
@@ -77,7 +83,7 @@ export const Profile = () => {
                 src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
               />
             </div>
-            <div className="w-20 h-20 mr-2 rounded overflow-hidden relative cursor-pointer">
+            <div className="w-20 h-20 rounded overflow-hidden relative cursor-pointer">
               <div className="absolute w-full h-full bg-[#343a40] opacity-70 flex justify-center items-center">
                 <span className="text-white">+ 14</span>
               </div>

@@ -29,7 +29,7 @@ export abstract class BaseService {
   }
 
   private didAccessTokenExpire(response: any): boolean {
-    return get(response, "data.message") === "Token signature expired.";
+    return get(response, "data.message")?.includes("Token signature expired.");
   }
 
   private async regenerateAccessTokenFromRefreshToken(): Promise<string> {
