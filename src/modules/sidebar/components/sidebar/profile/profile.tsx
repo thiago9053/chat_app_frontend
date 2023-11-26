@@ -14,6 +14,7 @@ import {
 export const Profile = () => {
   const { profile, loadingState } = useProfile();
   const username = profile?.user?.username;
+  const email = profile?.user?.email;
   console.log(profile, loadingState);
   return (
     <div className="w-full h-full relative shadow-[10px_0px_60px_-15px_rgba(0,0,0,0.3)]">
@@ -58,7 +59,7 @@ export const Profile = () => {
           </div>
           <div className="flex justify-start items-center">
             <UserIcon className="h-3 pr-4" fill="#797c8c" />
-            levanthi.tl9@gmail.com
+            {email || "((email))"}
           </div>
           <div className="flex justify-start items-center">
             <UserIcon className="h-3 pr-4" fill="#797c8c" />
