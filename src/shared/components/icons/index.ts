@@ -19,3 +19,8 @@ export * from "./downloadIcon";
 export * from "./fileIcon";
 export * from "./filesIcon";
 export * from "./userIcon";
+export * from "./mailIcon";
+export * from "./locationIcon";
+export * from "./acceptIcon";
+export * from "./closeIcon";
+export * from "./cameraIcon";

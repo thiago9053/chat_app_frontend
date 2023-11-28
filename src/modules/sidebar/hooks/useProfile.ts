@@ -1,9 +1,21 @@
-import { useState } from "react";
-import { selectProfile, ProfileState } from "@/modules/sidebar/slices/profile";
+import { selectProfile } from "@/modules/sidebar/slices/profile";
 import { useAppSelector } from "@/shared/infra/redux/hooks";
+import { useEffect, useState } from "react";
 
 export const useProfile = () => {
-  const profileState = useAppSelector(selectProfile);
-  const { profile, loadingState } = profileState;
-  return { profile, loadingState };
+  const [profile, setProfile] = useState<any>({});
+  const profileSelector = useAppSelector(selectProfile);
+
+  useEffect(() => {
+    if (profileSelector.loadingState === "COMPLETE") {
+      setProfile(profileSelector.profile);
+    } else {
+      setProfile({});
+    }
+  }, [profileSelector.loadingState]);
+
+  return {
+    profileInformation: profile,
+    loadingState: profileSelector.loadingState,
+  };
 };

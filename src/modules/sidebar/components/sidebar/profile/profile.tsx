@@ -1,3 +1,4 @@
+import { ProfileSkeleton } from "./skeleton";
 import { useProfile } from "@/modules/sidebar/hooks/useProfile";
 import {
   ActionIcon,
@@ -5,6 +6,8 @@ import {
   DownloadIcon,
   FileIcon,
   UserIcon,
+  MailIcon,
+  LocationIcon,
 } from "@/shared/components/icons";
 import {
   coverImagePlaceholder,
@@ -12,10 +15,9 @@ import {
 } from "@/shared/constants/placeholderImages";
 
 export const Profile = () => {
-  const { profile, loadingState } = useProfile();
-  const username = profile?.user?.username;
-  const email = profile?.user?.email;
-  console.log(profile, loadingState);
+  const { profileInformation, loadingState } = useProfile();
+  if (loadingState === "LOADING") return <ProfileSkeleton />;
+  const { user, profile } = profileInformation;
   return (
     <div className="w-full h-full relative shadow-[10px_0px_60px_-15px_rgba(0,0,0,0.3)]">
       <div
@@ -37,10 +39,10 @@ export const Profile = () => {
           }}
         ></div>
         <h1 className="font-bold text-gray-700 text-[17px]">
-          {username || "((Unamed))"}
+          {user?.username || "((Unamed))"}
         </h1>
         <p className="text-slate-500 text-[15px]">
-          {"((Dont have signature))"}
+          {profile?.signature || "((Dont have signature))"}
         </p>
       </div>
       <div
@@ -53,17 +55,23 @@ export const Profile = () => {
             is more simple.
           </span>
           <br></br>
-          <div className="flex justify-start items-center mt-4">
-            <UserIcon className="h-3 pr-4" fill="#797c8c" /> Le Van Thi (Alex
-            Le)
+          <div className="flex justify-start items-center mt-4 mb-2">
+            <UserIcon className="h-3 w-3 mr-3" fill="#797c8c" />{" "}
+            <span className="text-[#333]  font-[400] text-[14px]">
+              Le Van Thi (Alex Le)
+            </span>
           </div>
-          <div className="flex justify-start items-center">
-            <UserIcon className="h-3 pr-4" fill="#797c8c" />
-            {email || "((email))"}
+          <div className="flex justify-start items-center mb-2">
+            <MailIcon className="h-3 w-3 mr-3" fill="#797c8c" />
+            <span className="text-[#333]  font-[400] text-[14px]">
+              {user?.email || "((email))"}
+            </span>
           </div>
-          <div className="flex justify-start items-center">
-            <UserIcon className="h-3 pr-4" fill="#797c8c" />
-            Ho Chi Minh city, Vietnam
+          <div className="flex justify-start items-center mb-2">
+            <LocationIcon className="h-3 w-3 mr-3" fill="#797c8c" />
+            <span className="text-[#333] font-[400] text-[14px]">
+              {profile?.location || "((location))"}
+            </span>
           </div>
         </div>
         <div className="py-5 border-b border-gray-200">

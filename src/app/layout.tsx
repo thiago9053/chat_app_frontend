@@ -2,13 +2,13 @@
 import { Providers } from "@/shared/infra/redux/providers";
 import "./globals.css";
 // import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Roboto, Inter } from "next/font/google";
 import { AntdStyledComponentsRegistry } from "@/shared/infra/antd/AntdStyledComponentsRegistry";
 import ToastProvider from "@/shared/infra/toastify/ToastProvider";
 
-const inter = Roboto({
-  weight: ["100", "300", "400", "500", "700", "900"],
-  style: ["normal", "italic"],
+const inter = Inter({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+  style: ["normal"],
   subsets: ["latin"],
   display: "swap",
 });
