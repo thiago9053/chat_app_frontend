@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, ChangeEvent } from "react";
 import { useAppDispatch } from "@/shared/infra/redux/hooks";
 import { supabase } from "@/shared/infra/supabase";
+import { profileService } from "@/modules/sidebar/services";
+import { getProfileAction } from "@/modules/sidebar/slices/profile";
 
 export const useCoverImage = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -37,12 +39,13 @@ export const useCoverImage = () => {
     if (selectedFile) {
       const { data, error } = await supabase.storage
         .from("cover-images")
-        .upload(`images/${selectedFile?.name}`, selectedFile);
+        .upload(`${selectedFile?.name}`, selectedFile);
       if (data && !error) {
-        // await uploadCoverImageService({
-        //   coverImageUrl: `images/${selectedFile?.name}`,
-        // });
-        // await dispatch(getProfileInformationAction());
+        await profileService.updateProfile({
+          field: "coverImageUrl",
+          data: `${selectedFile?.name}`,
+        });
+        await dispatch(getProfileAction());
         setPreview("");
       }
     }

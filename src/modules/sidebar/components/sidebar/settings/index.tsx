@@ -3,6 +3,8 @@ import { CoverImage } from "./coverImage";
 import { Avatar } from "./avatar";
 import { Status } from "./status";
 import { useProfile } from "@/modules/sidebar/hooks/useProfile";
+import { PersonalInfo } from "./personalInfo";
+import { Themes } from "./themes";
 
 interface SettingItemsState {
   personalInfo: boolean;
@@ -35,6 +37,26 @@ export const Settings: FC = () => {
           {profile?.signature || "((Dont have signature))"}
         </p>
         <Status />
+      </div>
+      <div className="overflow-y-scroll scrollbar-hide">
+        <PersonalInfo
+          isOpen={itemState.personalInfo}
+          setOpen={() => {
+            setItemState((state) => ({
+              ...initialState,
+              personalInfo: !state.personalInfo,
+            }));
+          }}
+        />
+        <Themes
+          isOpen={itemState.themes}
+          setOpen={() => {
+            setItemState((state) => ({
+              ...initialState,
+              themes: !state.themes,
+            }));
+          }}
+        />
       </div>
     </div>
   );

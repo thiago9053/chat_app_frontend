@@ -4,6 +4,8 @@
 
 @layer base {
   :root {
-    --color-primary: 108 171 221;
+    --color-primary: 31 182 255;
+    --color-secondary: rgb(111 114 185);
+    /* ... */
   }
 }

@@ -16,7 +16,6 @@ export const Avatar = () => {
     handleCancelPreview,
     handleUploadFile,
   } = useAvatar();
-
   return (
     <div
       className="bg-cover w-24 h-24 rounded-full p-2 border-4 border-[#fafafa] routline-1 outline-slate-300 mb-4 relative"
@@ -24,8 +23,8 @@ export const Avatar = () => {
         backgroundImage: `url(${
           preview
             ? preview
-            : profile?.avatar_url
-              ? getAvatar(profile?.avatar_url)
+            : profile?.avatarUrl
+              ? getAvatar(profile?.avatarUrl)
               : avatarPlaceholder
         })`,
       }}

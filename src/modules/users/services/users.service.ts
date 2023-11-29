@@ -60,7 +60,7 @@ export class UserService extends BaseService {
 
   public async signup(args: signupArgs): Promise<APIResponse<void>> {
     try {
-      const response = await this.post("/user/create", args);
+      await this.post("/user/create", args);
       return right(Result.ok<void>());
     } catch (err: any) {
       return left(

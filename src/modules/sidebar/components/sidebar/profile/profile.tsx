@@ -13,6 +13,7 @@ import {
   coverImagePlaceholder,
   avatarPlaceholder,
 } from "@/shared/constants/placeholderImages";
+import { getAvatar, getCoverImage } from "@/shared/infra/supabase/storage";
 
 export const Profile = () => {
   const { profileInformation, loadingState } = useProfile();
@@ -23,7 +24,11 @@ export const Profile = () => {
       <div
         className="bg-cover w-full h-[180px] relative top-0 left-0 border-t shadow-sm"
         style={{
-          backgroundImage: `url(${coverImagePlaceholder})`,
+          backgroundImage: `url(${
+            profile?.coverImageUrl
+              ? getCoverImage(profile?.coverImageUrl)
+              : coverImagePlaceholder
+          })`,
         }}
       >
         <div className="absolute w-full h-auto top-0 left-0 z-10 flex justify-between items-center p-4">
@@ -35,7 +40,11 @@ export const Profile = () => {
         <div
           className="bg-cover w-24 h-24 rounded-full p-2 border-4 border-[#fafafa] routline-1 outline-slate-300 mb-4"
           style={{
-            backgroundImage: `url(${avatarPlaceholder})`,
+            backgroundImage: `url(${
+              profile?.avatarUrl
+                ? getAvatar(profile?.avatarUrl)
+                : avatarPlaceholder
+            })`,
           }}
         ></div>
         <h1 className="font-bold text-gray-700 text-[17px]">

@@ -1,6 +1,7 @@
 "use client";
 import { Providers } from "@/shared/infra/redux/providers";
-import "./globals.css";
+import "@/shared/styles/globals.css";
+import "@/shared/styles/_main.scss";
 // import type { Metadata } from "next";
 import { Roboto, Inter } from "next/font/google";
 import { AntdStyledComponentsRegistry } from "@/shared/infra/antd/AntdStyledComponentsRegistry";

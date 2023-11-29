@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, ChangeEvent } from "react";
 import { useAppDispatch } from "@/shared/infra/redux/hooks";
 import { supabase } from "@/shared/infra/supabase";
+import { profileService } from "@/modules/sidebar/services";
+import { getProfileAction } from "@/modules/sidebar/slices/profile";
 
 export const useAvatar = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -35,12 +37,16 @@ export const useAvatar = () => {
 
   const handleUploadFile = async () => {
     if (selectedFile) {
+      console.log(selectedFile);
       const { data, error } = await supabase.storage
         .from("avatars")
-        .upload(`images/${selectedFile?.name}`, selectedFile);
+        .upload(`${selectedFile?.name}`, selectedFile);
       if (data && !error) {
-        //await uploadAvatarService(`images/${selectedFile?.name}`);
-        //await dispatch(getProfileInformationAction());
+        await profileService.updateProfile({
+          field: "avatarUrl",
+          data: `${selectedFile?.name}`,
+        });
+        await dispatch(getProfileAction());
         setPreview("");
       }
     }

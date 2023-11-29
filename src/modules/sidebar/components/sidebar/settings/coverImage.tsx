@@ -23,8 +23,8 @@ export const CoverImage: FC = () => {
         backgroundImage: `url(${
           preview
             ? preview
-            : profile?.cover_image_url
-              ? getCoverImage(profile?.cover_image_url)
+            : profile?.coverImageUrl
+              ? getCoverImage(profile?.coverImageUrl)
               : coverImagePlaceholder
         })`,
       }}
