@@ -1,5 +1,5 @@
 "use client";
-import { Menu } from "@/modules/sidebar/components/menu";
+import { Menu } from "@/modules/sidebar/components/menu/menu";
 import { Sidebar } from "@/modules/sidebar/components/sidebar/sidebar";
 import { getProfileAction } from "@/modules/sidebar/slices/profile";
 import { useAppDispatch } from "@/shared/infra/redux/hooks";

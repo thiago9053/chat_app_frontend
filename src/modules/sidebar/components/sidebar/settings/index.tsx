@@ -5,6 +5,8 @@ import { Status } from "./status";
 import { useProfile } from "@/modules/sidebar/hooks/useProfile";
 import { PersonalInfo } from "./personalInfo";
 import { Themes } from "./themes";
+import { Privacy } from "./privacy";
+import { Security } from "./security";
 
 interface SettingItemsState {
   personalInfo: boolean;
@@ -57,6 +59,8 @@ export const Settings: FC = () => {
             }));
           }}
         />
+        <Privacy />
+        <Security />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 import { FC, useState } from "react";
-import { changeActiveMenu, menuType, selectMenu } from "../slices/menu";
+import { changeActiveMenu, menuType, selectMenu } from "../../slices/menu";
 import { useAppDispatch, useAppSelector } from "@/shared/infra/redux/hooks";
 import {
   BookmarkIcon,
@@ -14,26 +14,16 @@ import {
   SettingIcon,
 } from "@/shared/components/icons";
 import clsx from "clsx";
-import { userService } from "@/modules/users/services";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { ProfileUser } from "./profileUser";
 
 export const Menu: FC = () => {
   const sidebarState = useAppSelector(selectMenu);
-  const router = useRouter();
+
   const { activeMenu } = sidebarState;
   const dispatch = useAppDispatch();
 
   const handleChangeMenu = (menuType: menuType) => {
     dispatch(changeActiveMenu({ menuType }));
-  };
-
-  const handleLogout = async () => {
-    await userService.logout();
-    toast.success("Logout successfully", {
-      position: toast.POSITION.TOP_LEFT,
-    });
-    router.push("/login");
   };
 
   const RenderThemeChanger: FC = () => {
@@ -55,7 +45,7 @@ export const Menu: FC = () => {
           <LightModeIcon className="h-6 fill-yellow-500" />
         </div>
       );
-    } else if (theme === "dark") {
+    } else if (theme === "light") {
       return (
         <div
           className="py-6 cursor-pointer"
@@ -68,6 +58,18 @@ export const Menu: FC = () => {
         </div>
       );
     }
+
+    return (
+      <div
+        className="py-6 cursor-pointer"
+        onClick={() => {
+          setTheme("dark");
+          localStorage.setItem("theme", "dark");
+        }}
+      >
+        <DarkModeIcon className="h-6 fill-gray-600" />
+      </div>
+    );
   };
   return (
     <div className="text-white w-20 bg-[#2e2e2e] dark:bg-[#d1d1d1] h-full flex py-4 flex-col items-center justify-between">
@@ -131,10 +133,7 @@ export const Menu: FC = () => {
       <div className="">
         <div className="flex flex-col items-center">
           <RenderThemeChanger />
-          <div
-            className="mt-4 h-8 w-8 rounded-full bg-white"
-            onClick={handleLogout}
-          ></div>
+          <ProfileUser />
         </div>
       </div>
     </div>

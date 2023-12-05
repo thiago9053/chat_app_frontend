@@ -20,6 +20,10 @@ export type signupArgs = {
   email: string;
 };
 
+export type updateEmailArgs = {
+  email: string;
+};
+
 export class UserService extends BaseService {
   constructor(authService: IAuthService) {
     super(authService);
@@ -61,6 +65,19 @@ export class UserService extends BaseService {
   public async signup(args: signupArgs): Promise<APIResponse<void>> {
     try {
       await this.post("/user/create", args);
+      return right(Result.ok<void>());
+    } catch (err: any) {
+      return left(
+        err.response ? err.response.data.message : "Connection failed"
+      );
+    }
+  }
+
+  public async updateEmail(args: updateEmailArgs): Promise<APIResponse<void>> {
+    try {
+      await this.post("/user/email/update", args, null, {
+        authorization: this.authService.getToken("access-token").token,
+      });
       return right(Result.ok<void>());
     } catch (err: any) {
       return left(

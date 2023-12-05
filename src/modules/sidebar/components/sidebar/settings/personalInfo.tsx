@@ -4,6 +4,10 @@ import { EditIcon } from "@/shared/components/icons/editIcon";
 import { UserIcon } from "@/shared/components/icons/userIcon";
 import clxs, { clsx } from "clsx";
 import { useProfile } from "@/modules/sidebar/hooks/useProfile";
+import { EditName } from "./modals/editName";
+import { EditSignature } from "./modals/editSignature";
+import { Spin } from "antd";
+import { EditEmail } from "@/modules/sidebar/components/sidebar/settings/modals/editEmail";
 
 interface IPersonalInfoProps {
   isOpen: boolean;
@@ -13,8 +17,18 @@ interface IPersonalInfoProps {
 export const PersonalInfo: FC<IPersonalInfoProps> = (props) => {
   const { isOpen, setOpen } = props;
 
-  const { profileInformation } = useProfile();
-  const { profile } = profileInformation;
+  const [isOpenEditModals, setOpenEditModals] = useState<{
+    name: boolean;
+    signature: boolean;
+    mail: boolean;
+  }>({
+    name: false,
+    signature: false,
+    mail: false,
+  });
+
+  const { profileInformation, loadingState } = useProfile();
+  const { profile, user } = profileInformation;
 
   return (
     <div className={clxs("w-full")}>
@@ -51,42 +65,92 @@ export const PersonalInfo: FC<IPersonalInfoProps> = (props) => {
           ]
         )}
       >
-        <div className="w-full mb-4">
-          <div className="flex justify-between items-center">
-            <span className="inline-block text-sm text-[#797c8c]">Name</span>
-            <div className="bg-primary/10 p-2 rounded cursor-pointer">
-              <EditIcon className={clxs("fill-primary h-3")} />
-            </div>
+        {loadingState === "LOADING" ? (
+          <div className="flex justify-center">
+            <Spin size="large" />
           </div>
-          <span className="text-sm text-[#496057] font-bold">
-            {profile?.name || "((Unamed))"}
-          </span>
-        </div>
-        <div className="w-full mb-4">
-          <div className="flex justify-between items-center">
-            <span className="inline-block text-sm text-[#797c8c]">
-              Signature
-            </span>
-            <div className="bg-primary/10 p-2 rounded cursor-pointer">
-              <EditIcon className="fill-primary h-3" />
+        ) : (
+          <>
+            <div className="w-full mb-4">
+              <div className="flex justify-between items-center">
+                <span className="inline-block text-sm text-[#797c8c]">
+                  Name
+                </span>
+                <div
+                  className="bg-primary/10 p-2 rounded cursor-pointer"
+                  onClick={() => {
+                    setOpenEditModals((prev) => ({
+                      ...prev,
+                      name: !prev.name,
+                    }));
+                  }}
+                >
+                  <EditIcon className={clxs("fill-primary h-3")} />
+                </div>
+              </div>
+              <span className="text-sm text-[#496057] font-bold">
+                {profile?.name || "((Unamed))"}
+              </span>
             </div>
-          </div>
-          <span className="text-sm text-[#496057] font-bold">
-            {profile?.signature || "((Dont have signature))"}
-          </span>
-        </div>
-        <div className="w-full mb-4">
-          <div className="flex justify-between items-center">
-            <span className="inline-block text-sm text-[#797c8c]">Email</span>
-            <div className="bg-primary/10 p-2 rounded cursor-pointer">
-              <EditIcon className="fill-primary h-3" />
+            <div className="w-full mb-4">
+              <div className="flex justify-between items-center">
+                <span className="inline-block text-sm text-[#797c8c]">
+                  Signature
+                </span>
+                <div
+                  className="bg-primary/10 p-2 rounded cursor-pointer"
+                  onClick={() => {
+                    setOpenEditModals((prev) => ({
+                      ...prev,
+                      signature: !prev.name,
+                    }));
+                  }}
+                >
+                  <EditIcon className="fill-primary h-3" />
+                </div>
+              </div>
+              <span className="text-sm text-[#496057] font-bold">
+                {profile?.signature || "((Dont have signature))"}
+              </span>
             </div>
-          </div>
-          <span className="text-sm text-[#496057] font-bold">
-            {profile?.email}
-          </span>
-        </div>
+            <div className="w-full mb-4">
+              <div className="flex justify-between items-center">
+                <span className="inline-block text-sm text-[#797c8c]">
+                  Email
+                </span>
+                <div
+                  className="bg-primary/10 p-2 rounded cursor-pointer"
+                  onClick={() => {
+                    setOpenEditModals((prev) => ({
+                      ...prev,
+                      mail: !prev.mail,
+                    }));
+                  }}
+                >
+                  <EditIcon className="fill-primary h-3" />
+                </div>
+              </div>
+              <span className="text-sm text-[#496057] font-bold">
+                {user?.email || "((Dont have email))"}
+              </span>
+            </div>
+          </>
+        )}
       </div>
+      <EditName
+        open={isOpenEditModals.name}
+        onCancel={() => setOpenEditModals((prev) => ({ ...prev, name: false }))}
+      />
+      <EditSignature
+        open={isOpenEditModals.signature}
+        onCancel={() =>
+          setOpenEditModals((prev) => ({ ...prev, signature: false }))
+        }
+      />
+      <EditEmail
+        open={isOpenEditModals.mail}
+        onCancel={() => setOpenEditModals((prev) => ({ ...prev, mail: false }))}
+      />
     </div>
   );
 };

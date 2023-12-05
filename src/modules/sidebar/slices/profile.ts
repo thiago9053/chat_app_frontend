@@ -1,6 +1,7 @@
 import { profileService } from "@/modules/sidebar/services";
 import { loadingState } from "@/shared/constants/loadingState";
 import { RootState } from "@/shared/infra/redux/store";
+import { diffInVariantFields } from "@/shared/utils/diffInVariantFields";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface ProfileState {
@@ -18,7 +19,6 @@ export const getProfileAction = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await profileService.getProfile();
-      console.log(response);
       if (response.isRight()) {
         return response.value.getValue();
       }
@@ -34,7 +34,6 @@ export const profileSlice = createSlice({
   initialState,
   reducers: {
     setProfile: (state, action) => {
-      console.log("37", action);
       state.profile = action.payload;
     },
   },

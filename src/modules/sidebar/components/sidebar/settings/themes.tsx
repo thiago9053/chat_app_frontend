@@ -6,6 +6,8 @@ import { ThemesIcon } from "@/shared/components/icons/themesIcon";
 import { hexToRgb } from "@/shared/utils/hexToRbga";
 import { useThemes } from "@/modules/sidebar/hooks/useThemes";
 import { backgroundPattern } from "@/modules/sidebar/slices/themes";
+import { Popover } from "antd";
+import Image from "next/image";
 
 const themeColors = [
   { name: "main-blue", value: "#1fb6ff" },
@@ -58,10 +60,10 @@ export const Themes: FC<IThemesProps> = (props) => {
       </div>
       <div
         className={clsx(
-          "w-full border-b border-slate-100 transition-all duration-250",
+          "w-full border-b border-slate-100 transition-all duration-250 overflow-y-scroll",
           [
             isOpen
-              ? "max-h-[500px] opacity-100 p-5"
+              ? "max-h-[300px] opacity-100 p-5"
               : "max-h-0 invisible px-5 opacity-0",
           ]
         )}
@@ -107,26 +109,39 @@ export const Themes: FC<IThemesProps> = (props) => {
               <div className="flex flex-wrap gap-4">
                 {[...Array(9).keys()].map((index: number) => {
                   return (
-                    <div
-                      key={index}
-                      className={clsx(
-                        "h-8 w-8 rounded-full border-[#e6ebf5] bg-slate-100 bg-cover border cursor-pointer flex justify-center items-center"
-                      )}
-                      style={{
-                        backgroundColor: `url(/assets/images/bg-pattern/pattern-0${
-                          index + 1
-                        }.png)`,
-                      }}
-                      onClick={() => {
-                        handleChangeBackground(
-                          (index + 1) as backgroundPattern
-                        );
-                      }}
+                    <Popover
+                      content={
+                        <div className="bg-[#f2f2f2]">
+                          <Image
+                            src={`/images/bg-pattern/pattern-0${index + 1}.png`}
+                            width={300}
+                            height={300}
+                            alt="Picture of the author"
+                          />
+                        </div>
+                      }
                     >
-                      {index + 1 === backgroundPatternType && (
-                        <AcceptIcon className="h-3 fill-green-500" />
-                      )}
-                    </div>
+                      <div
+                        key={index}
+                        className={clsx(
+                          "h-16 w-16 border-[#e6ebf5] bg-none bg-cover border cursor-pointer flex justify-center items-center"
+                        )}
+                        style={{
+                          backgroundImage: `url(images/bg-pattern/pattern-0${
+                            index + 1
+                          }.png)`,
+                        }}
+                        onClick={() => {
+                          handleChangeBackground(
+                            (index + 1) as backgroundPattern
+                          );
+                        }}
+                      >
+                        {index + 1 === backgroundPatternType && (
+                          <AcceptIcon className="h-3 fill-green-500" />
+                        )}
+                      </div>
+                    </Popover>
                   );
                 })}
               </div>

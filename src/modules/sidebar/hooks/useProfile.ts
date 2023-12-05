@@ -12,7 +12,7 @@ export const useProfile = () => {
     } else {
       setProfile({});
     }
-  }, [profileSelector.loadingState]);
+  }, [profileSelector.loadingState, profileSelector.profile]);
 
   return {
     profileInformation: profile,
