@@ -60,7 +60,7 @@ export const Themes: FC<IThemesProps> = (props) => {
       </div>
       <div
         className={clsx(
-          "w-full border-b border-slate-100 transition-all duration-250 overflow-y-scroll",
+          "w-full border-b border-slate-100 transition-all duration-250 overflow-y-scroll scrollbar-hide",
           [
             isOpen
               ? "max-h-[300px] opacity-100 p-5"
@@ -120,9 +120,9 @@ export const Themes: FC<IThemesProps> = (props) => {
                           />
                         </div>
                       }
+                      key={index}
                     >
                       <div
-                        key={index}
                         className={clsx(
                           "h-16 w-16 border-[#e6ebf5] bg-none bg-cover border cursor-pointer flex justify-center items-center"
                         )}

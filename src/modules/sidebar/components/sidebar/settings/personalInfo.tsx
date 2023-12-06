@@ -7,7 +7,9 @@ import { useProfile } from "@/modules/sidebar/hooks/useProfile";
 import { EditName } from "./modals/editName";
 import { EditSignature } from "./modals/editSignature";
 import { Spin } from "antd";
-import { EditEmail } from "@/modules/sidebar/components/sidebar/settings/modals/editEmail";
+import { EditEmail } from "./modals/editEmail";
+import { EditPhoneNumber } from "./modals/editPhoneNumber";
+import { EditLocation } from "./modals/editLocation";
 
 interface IPersonalInfoProps {
   isOpen: boolean;
@@ -20,15 +22,21 @@ export const PersonalInfo: FC<IPersonalInfoProps> = (props) => {
   const [isOpenEditModals, setOpenEditModals] = useState<{
     name: boolean;
     signature: boolean;
-    mail: boolean;
+    email: boolean;
+    phoneNumber: boolean;
+    location: boolean;
   }>({
     name: false,
     signature: false,
-    mail: false,
+    email: false,
+    phoneNumber: false,
+    location: false,
   });
 
   const { profileInformation, loadingState } = useProfile();
   const { profile, user } = profileInformation;
+
+  console.log(profile);
 
   return (
     <div className={clxs("w-full")}>
@@ -57,10 +65,10 @@ export const PersonalInfo: FC<IPersonalInfoProps> = (props) => {
       </div>
       <div
         className={clxs(
-          "w-full border-b border-slate-100 transition-all duration-250",
+          "w-full border-b border-slate-100 transition-all duration-250 overflow-y-scroll scrollbar-hide",
           [
             isOpen
-              ? "max-h-[500px] opacity-100 p-5"
+              ? "max-h-[300px] opacity-100 p-5"
               : "max-h-0 invisible px-5 opacity-0",
           ]
         )}
@@ -123,7 +131,7 @@ export const PersonalInfo: FC<IPersonalInfoProps> = (props) => {
                   onClick={() => {
                     setOpenEditModals((prev) => ({
                       ...prev,
-                      mail: !prev.mail,
+                      email: !prev.email,
                     }));
                   }}
                 >
@@ -132,6 +140,48 @@ export const PersonalInfo: FC<IPersonalInfoProps> = (props) => {
               </div>
               <span className="text-sm text-[#496057] font-bold">
                 {user?.email || "((Dont have email))"}
+              </span>
+            </div>
+            <div className="w-full mb-4">
+              <div className="flex justify-between items-center">
+                <span className="inline-block text-sm text-[#797c8c]">
+                  Phone Number
+                </span>
+                <div
+                  className="bg-primary/10 p-2 rounded cursor-pointer"
+                  onClick={() => {
+                    setOpenEditModals((prev) => ({
+                      ...prev,
+                      phoneNumber: !prev.phoneNumber,
+                    }));
+                  }}
+                >
+                  <EditIcon className="fill-primary h-3" />
+                </div>
+              </div>
+              <span className="text-sm text-[#496057] font-bold">
+                {profile?.phoneNumber || "((Dont have phone number))"}
+              </span>
+            </div>
+            <div className="w-full mb-4">
+              <div className="flex justify-between items-center">
+                <span className="inline-block text-sm text-[#797c8c]">
+                  Location
+                </span>
+                <div
+                  className="bg-primary/10 p-2 rounded cursor-pointer"
+                  onClick={() => {
+                    setOpenEditModals((prev) => ({
+                      ...prev,
+                      location: !prev.location,
+                    }));
+                  }}
+                >
+                  <EditIcon className="fill-primary h-3" />
+                </div>
+              </div>
+              <span className="text-sm text-[#496057] font-bold">
+                {profile?.location || "((Dont have location))"}
               </span>
             </div>
           </>
@@ -148,8 +198,22 @@ export const PersonalInfo: FC<IPersonalInfoProps> = (props) => {
         }
       />
       <EditEmail
-        open={isOpenEditModals.mail}
-        onCancel={() => setOpenEditModals((prev) => ({ ...prev, mail: false }))}
+        open={isOpenEditModals.email}
+        onCancel={() =>
+          setOpenEditModals((prev) => ({ ...prev, email: false }))
+        }
+      />
+      <EditPhoneNumber
+        open={isOpenEditModals.phoneNumber}
+        onCancel={() =>
+          setOpenEditModals((prev) => ({ ...prev, phoneNumber: false }))
+        }
+      />
+      <EditLocation
+        open={isOpenEditModals.location}
+        onCancel={() =>
+          setOpenEditModals((prev) => ({ ...prev, location: false }))
+        }
       />
     </div>
   );

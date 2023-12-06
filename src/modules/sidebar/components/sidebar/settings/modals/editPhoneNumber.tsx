@@ -2,25 +2,28 @@ import { FC, FormEvent } from "react";
 import { Form, Button, Input, Modal } from "antd";
 import { useEditProfile } from "@/modules/sidebar/hooks/useEditProfile";
 
-interface EditSignatureProps {
+interface EditPhoneNumberProps {
   onCancel: any;
   open: boolean;
 }
 
-export const EditSignature: FC<EditSignatureProps> = (props) => {
+export const EditPhoneNumber: FC<EditPhoneNumberProps> = (props) => {
   const { onCancel, open } = props;
 
-  const { fieldValue: initialSignature, handleUpdateProfile } = useEditProfile({
-    field: "signature",
-    afterSubmit: onCancel,
-  });
+  const { fieldValue: initialPhoneNumber, handleUpdateProfile } =
+    useEditProfile({
+      field: "phoneNumber",
+      afterSubmit: onCancel,
+    });
 
   const [form] = Form.useForm();
 
   return (
     <Modal
       title={
-        <h1 className="text-[#495057] text-[16px] font-bold">Edit Signature</h1>
+        <h1 className="text-[#495057] text-[16px] font-bold">
+          Edit Phone Number
+        </h1>
       }
       width={500}
       open={open}
@@ -37,19 +40,19 @@ export const EditSignature: FC<EditSignatureProps> = (props) => {
       <Form
         form={form}
         onFinish={handleUpdateProfile}
-        initialValues={{ signature: initialSignature }}
+        initialValues={{ phoneNumber: initialPhoneNumber }}
       >
         <Form.Item
           className="!pt-6"
           label={
             <span className="text-[#495057] text-[15px] font-[500]">
-              Signature
+              Phone Number
             </span>
           }
-          name="signature"
+          name="phoneNumber"
         >
           <Input
-            placeholder="Enter signature here..."
+            placeholder="Enter phone number here..."
             className="text-[13px] border border-[#e6ebf5] rounded outline-0 px-3 py-1 focus:outline-0 focus:ring-0 focus:border-[#e6ebf5]"
           />
         </Form.Item>

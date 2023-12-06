@@ -29,13 +29,13 @@ export abstract class BaseService {
   }
 
   private didAccessTokenExpire(response: any): boolean {
-    return get(response, "data.message")?.includes("Token signature expired.");
+    return get(response, "data.message")?.includes("Token signature expired");
   }
 
   private async regenerateAccessTokenFromRefreshToken(): Promise<string> {
     const response = await axios({
       method: "POST",
-      url: `${this.baseUrl}/users/token/refresh`,
+      url: `${this.baseUrl}/user/token/refresh`,
       data: {
         refreshToken: this.authService.getToken("refresh-token").token,
       },

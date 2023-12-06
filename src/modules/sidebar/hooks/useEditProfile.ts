@@ -37,9 +37,16 @@ export const useEditProfile = (props: IUseEditNameProps) => {
         });
       } else {
         setLoading("COMPLETE");
-        toast.success(`Update ${field} successfully`, {
-          position: toast.POSITION.TOP_LEFT,
-        });
+        toast.success(
+          `Update ${field
+            .replace(/([A-Z])/g, " $1")
+            .replace(/^./, function (str) {
+              return str.toUpperCase();
+            })} successfully`,
+          {
+            position: toast.POSITION.TOP_LEFT,
+          }
+        );
       }
       afterSubmit();
       dispatch(getProfileAction());
