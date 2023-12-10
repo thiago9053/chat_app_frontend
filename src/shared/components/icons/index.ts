@@ -27,3 +27,4 @@ export * from "./cameraIcon";
 export * from "./privacyIcon";
 export * from "./securityIcon";
 export * from "./logOutIcon";
+export * from "./plusIcon";

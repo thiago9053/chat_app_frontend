@@ -3,6 +3,7 @@ import { useAppDispatch } from "@/shared/infra/redux/hooks";
 import { supabase } from "@/shared/infra/supabase";
 import { profileService } from "@/modules/sidebar/services";
 import { getProfileAction } from "@/modules/sidebar/slices/profile";
+import moment from "moment";
 
 export const useCoverImage = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -37,13 +38,14 @@ export const useCoverImage = () => {
 
   const handleUploadFile = async () => {
     if (selectedFile) {
+      const now = Date.now();
       const { data, error } = await supabase.storage
         .from("cover-images")
-        .upload(`${selectedFile?.name}`, selectedFile);
+        .upload(`${now}-${selectedFile?.name}`, selectedFile);
       if (data && !error) {
         await profileService.updateProfile({
           field: "coverImageUrl",
-          data: `${selectedFile?.name}`,
+          data: `${now}-${selectedFile?.name}`,
         });
         await dispatch(getProfileAction());
         setPreview("");

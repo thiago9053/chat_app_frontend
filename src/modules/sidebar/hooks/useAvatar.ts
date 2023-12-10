@@ -37,14 +37,14 @@ export const useAvatar = () => {
 
   const handleUploadFile = async () => {
     if (selectedFile) {
-      console.log(selectedFile);
+      const now = Date.now();
       const { data, error } = await supabase.storage
         .from("avatars")
-        .upload(`${selectedFile?.name}`, selectedFile);
+        .upload(`${now}-${selectedFile?.name}`, selectedFile);
       if (data && !error) {
         await profileService.updateProfile({
           field: "avatarUrl",
-          data: `${selectedFile?.name}`,
+          data: `${now}-${selectedFile?.name}`,
         });
         await dispatch(getProfileAction());
         setPreview("");
