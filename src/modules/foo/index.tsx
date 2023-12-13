@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/shared/infra/redux/hooks";
 import { Value } from "@/modules/foo/components/value";
 
 export const Foo = () => {
-  const count = useAppSelector((state) => state.counterReducer.value);
+  const count = useAppSelector((state) => state.counter.value);
   const dispatch = useAppDispatch();
   return (
     <div className="flex space-x-4">

@@ -1,4 +1,5 @@
 import { PlusIcon } from "@/shared/components/icons";
+import { Button } from "antd";
 import clsx from "clsx";
 import { FC } from "react";
 
@@ -9,7 +10,7 @@ export const Contact: FC = () => {
         <div className="w-full h-auto flex justify-between items-center py-4">
           <h1 className="font-[600] text-[18px] text-[#495057]">Contact</h1>
           <div className="flex justify-end items-center gap-2">
-            <button
+            {/* <button
               className={clsx(
                 "relative cursor-pointer px-2 h-8 flex justify-center items-center rounded bg-primary/20 hover:bg-primary transition-all duration-300 group"
               )}
@@ -17,15 +18,11 @@ export const Contact: FC = () => {
               <span className="group-hover:text-white text-primary">
                 Applications
               </span>
-            </button>
-            <div
-              className={clsx(
-                "cursor-pointer bg-primary/20 w-8 h-8 flex justify-center items-center rounded hover:bg-primary group",
-                []
-              )}
-            >
+            </button> */}
+            <Button type="primary">Applications</Button>
+            <Button shape="circle" className="flex justify-center items-center">
               <PlusIcon className="h-4 group-hover:fill-[white] fill-[#92af9c]" />
-            </div>
+            </Button>
           </div>
         </div>
       </div>
