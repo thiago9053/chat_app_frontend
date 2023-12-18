@@ -6,12 +6,11 @@ type Props = {
 };
 
 export function SocketProvider({ children }: Props) {
-  const value = {
-    socket: socket,
-  };
   return (
     <>
-      <SocketContext.Provider value={value}>{children}</SocketContext.Provider>
+      <SocketContext.Provider value={{ socket }}>
+        {children}
+      </SocketContext.Provider>
     </>
   );
 }

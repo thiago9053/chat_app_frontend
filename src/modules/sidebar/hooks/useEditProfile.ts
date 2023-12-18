@@ -6,12 +6,12 @@ import { toast } from "react-toastify";
 import { useAppDispatch } from "@/shared/infra/redux/hooks";
 import { getProfileAction } from "@/modules/sidebar/slices/profile";
 
-interface IUseEditNameProps {
+interface IUseEditProfileProps {
   afterSubmit: () => void;
   field: string;
 }
 
-export const useEditProfile = (props: IUseEditNameProps) => {
+export const useEditProfile = (props: IUseEditProfileProps) => {
   const { afterSubmit, field } = props;
   const [loading, setLoading] = useState<loadingState>("IDLE");
   const [error, setError] = useState<string>("");

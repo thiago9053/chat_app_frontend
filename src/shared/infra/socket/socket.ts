@@ -3,7 +3,7 @@ import { createContext, useContext } from "react";
 import { Socket } from "socket.io-client";
 
 type socketContextTyoe = {
-  socket: Socket;
+  socket: Socket | undefined;
 };
 
 export const socket = io(process.env.API_BASE_URL as string);

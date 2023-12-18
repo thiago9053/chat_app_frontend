@@ -11,6 +11,22 @@ export type updateProfileArgs = {
   data: any;
 };
 
+export type findProfileArgs = {
+  keyword: string;
+};
+
+export type findProfile = {
+  email?: string;
+  name?: string;
+  avatarUrl?: string;
+  userId: string;
+  profileId: string;
+};
+
+export type findProfileResponse = {
+  foundProfiles: findProfile[];
+};
+
 export class ProfileService extends BaseService {
   constructor(authService: IAuthService) {
     super(authService);
@@ -38,6 +54,19 @@ export class ProfileService extends BaseService {
         authorization: this.authService.getToken("access-token").token,
       });
       return right(Result.ok<void>());
+    } catch (err: any) {
+      return left(
+        err.response ? err.response.data.message : "Connection failed"
+      );
+    }
+  }
+
+  public async findProfile(
+    args: findProfileArgs
+  ): Promise<APIResponse<findProfileResponse>> {
+    try {
+      const response = await this.get("/profile/list", args);
+      return right(Result.ok<findProfileResponse>(response.data));
     } catch (err: any) {
       return left(
         err.response ? err.response.data.message : "Connection failed"

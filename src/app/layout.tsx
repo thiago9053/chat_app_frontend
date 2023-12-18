@@ -28,13 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SocketProvider>
-          <Providers>
-            <AntdStyledComponentsRegistry>
-              <ToastProvider>{children}</ToastProvider>
-            </AntdStyledComponentsRegistry>
-          </Providers>
-        </SocketProvider>
+        {/* <SocketProvider> */}
+        <Providers>
+          <AntdStyledComponentsRegistry>
+            <ToastProvider>{children}</ToastProvider>
+          </AntdStyledComponentsRegistry>
+        </Providers>
+        {/* </SocketProvider> */}
       </body>
     </html>
   );
