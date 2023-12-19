@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { loadingState } from "@/shared/constants/loadingState";
-import { profileService } from "@/modules/sidebar/services";
+import { contactService, profileService } from "@/modules/sidebar/services";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "@/shared/infra/redux/hooks";
 import { getProfileAction } from "@/modules/sidebar/slices/profile";
@@ -19,9 +19,25 @@ export const useRequestContact = (props: IUseSendRequestProps) => {
   const dispatch = useAppDispatch();
 
   const handleSendRequest = async (formValue: { [key: string]: string }) => {
+    const { requesting, message } = formValue;
     try {
       setLoading("LOADING");
-
+      const response = await contactService.sendRequestContact({
+        requesting,
+        message,
+      });
+      if (response.isLeft()) {
+        setLoading("ERROR");
+        setError(response.value);
+        toast.error(response.value, {
+          position: toast.POSITION.TOP_LEFT,
+        });
+      } else {
+        setLoading("COMPLETE");
+        toast.success("Send request successfully", {
+          position: toast.POSITION.TOP_LEFT,
+        });
+      }
       afterSubmit();
     } catch (error: unknown) {
       if (error instanceof Error) {

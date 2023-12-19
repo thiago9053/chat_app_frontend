@@ -65,7 +65,9 @@ export class ProfileService extends BaseService {
     args: findProfileArgs
   ): Promise<APIResponse<findProfileResponse>> {
     try {
-      const response = await this.get("/profile/list", args);
+      const response = await this.get("/profile/list", args, {
+        authorization: this.authService.getToken("access-token").token,
+      });
       return right(Result.ok<findProfileResponse>(response.data));
     } catch (err: any) {
       return left(
